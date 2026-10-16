@@ -1,0 +1,124 @@
+﻿==============================================================================
+  NanoVNA Mirror
+  Espelhamento de tela e controle remoto para NanoVNA-H
+
+  Desenvolvido por Ruy Lazaro
+  laztel.com.br  |  ruylazaro.engenharia@gmail.com
+==============================================================================
+
+
+O QUE É
+-------
+Programa para Windows que mostra a tela do NanoVNA no computador, em tempo
+real e ampliada, e permite controlar o aparelho pelo PC: varredura, traces,
+marcadores, calibração, gerador de sinal e medidor S21. Também gera
+relatórios prontos em PNG ou PDF e exporta medições em Touchstone (.s1p/.s2p).
+
+
+REQUISITOS
+----------
+- Windows 10 ou 11 (64 bits).
+- NanoVNA-H ligado ao computador por cabo USB (cabo de dados, não apenas de
+  carga).
+- Não é preciso instalar Python nem nenhum outro programa.
+
+Compatibilidade: testado com NanoVNA-H (firmware edy555 / hugen). Outros
+modelos ou versões de firmware podem não aceitar todos os comandos; nesse
+caso, a resposta do aparelho aparece no Console.
+
+
+PRIMEIRA EXECUÇÃO
+-----------------
+1. Extraia o arquivo .zip para uma pasta (não execute de dentro do zip).
+2. Dê dois cliques em "NanoVNA Mirror.exe".
+3. Se aparecer a mensagem "O Windows protegeu o computador" (SmartScreen):
+   clique em "Mais informações" e depois em "Executar assim mesmo".
+   Isso acontece porque o programa não tem assinatura digital paga; não
+   indica problema no arquivo.
+4. A abertura pode levar alguns segundos. É normal.
+
+
+COMO USAR
+---------
+1. Ligue o NanoVNA e conecte-o ao USB.
+2. No programa, escolha a porta na lista "Porta" (o NanoVNA costuma ser
+   selecionado automaticamente) e clique em "Conectar".
+3. A tela do aparelho aparece à esquerda. Os controles ficam nas abas à
+   direita:
+
+   Estímulo     Faixa de frequência (início/fim ou centro/span), faixas
+                rápidas de radioamador, pausa e retomada da varredura.
+   Traces       Formato (logmag, smith, swr, fase...), canal S11 ou S21,
+                escala e referência de cada um dos 4 traces.
+   Marcadores   Posiciona marcadores por frequência e lê os valores
+                calculados: S11 em dB, SWR, impedância R+jX, L/C
+                equivalente e S21. "Mín. SWR -> M1" acha a ressonância.
+   Calibração   Sequência Open / Short / Load / Isolation / Thru e
+                salvar/carregar nos slots 0 a 4.
+   Gerador      Emite uma portadora fixa na porta CH0.
+   Sistema      Electrical delay, TDR, exportação Touchstone e
+                informações do aparelho.
+
+Atalhos:  F5 = ler o estado do aparelho   F12 = salvar imagem da tela
+
+
+RELATÓRIO
+---------
+Botão "Relatório" na barra superior. Preencha título, dispositivo sob teste,
+local, operador e observações, e escolha PNG ou PDF. O relatório inclui:
+data e hora, faixa de varredura, a tela ampliada, resumo do S11 (SWR mínimo,
+banda com SWR <= 2) e os valores dos marcadores ativos.
+Dica: posicione os marcadores antes de gerar o relatório.
+
+
+MEDIDOR S21
+-----------
+Botão "Medidor S21". O NanoVNA gera o sinal na porta CH0 e lê na porta CH1,
+numa frequência fixa, mostrando o resultado em uma tela estilo power meter.
+Uso típico: medir perda de cabos, atenuadores e filtros, ou ganho de
+amplificadores.
+- "Zerar (com thru)": ligue CH0 direto em CH1 com um cabo e clique. A partir
+  daí, a leitura mostra apenas a perda ou o ganho do que for inserido.
+- Em dBm: informe o nível de saída da porta CH0 (meça uma vez com um
+  medidor de potência ou analisador de espectro para maior exatidão).
+- "Gravar CSV" registra as leituras com data e hora.
+
+
+CUIDADOS IMPORTANTES
+--------------------
+- NUNCA ligue um transmissor, rádio ou amplificador de potência diretamente
+  nas portas do NanoVNA. Isso pode danificar o receptor permanentemente.
+  Use atenuadores adequados.
+- O medidor S21 mede apenas o sinal gerado pelo próprio NanoVNA. Ele NÃO
+  funciona como medidor de RSSI de sinais externos.
+- O gerador produz onda quadrada, com harmônicos fortes, e nível
+  aproximadamente fixo. Acima de cerca de 300 MHz o aparelho usa o 3º
+  harmônico, e a frequência fundamental (f/3) sai mais forte que a pedida.
+  Use filtro se precisar de sinal limpo.
+- Ao fechar o programa ou desconectar, o aparelho volta automaticamente à
+  varredura normal.
+
+
+PROBLEMAS COMUNS
+----------------
+"Falha ao conectar" ou "NanoVNA não respondeu"
+  - Feche outros programas que possam estar usando a porta (NanoVNA-Saver,
+    NanoVNA-App, PuTTY, monitor serial do Arduino). Só um programa por vez
+    pode usar a porta.
+  - Desconecte e reconecte o cabo USB, clique em "↻" e tente de novo.
+
+A porta do NanoVNA não aparece na lista
+  - Verifique se o cabo USB transmite dados (alguns cabos só carregam).
+  - Veja no Gerenciador de Dispositivos se aparece em "Portas (COM e LPT)".
+
+A imagem atualiza devagar
+  - É normal: a tela é transferida pela porta serial, a poucos quadros por
+    segundo. Abrir o Medidor S21 pausa o espelhamento temporariamente.
+
+
+Os ajustes do relatório (título, DUT, local, operador) ficam salvos no arquivo
+.nanovna_mirror.json, na pasta do usuário do Windows.
+
+------------------------------------------------------------------------------
+Desenvolvido por Ruy Lazaro  |  laztel.com.br  |  ruylazaro.engenharia@gmail.com
+------------------------------------------------------------------------------
