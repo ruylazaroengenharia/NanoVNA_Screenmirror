@@ -4,7 +4,7 @@ Espelhamento de tela e controle remoto para o **NanoVNA-H**, com geração de re
 
 Inspirado no SVxx01A_Tools (do VNA SV4401A), mas feito para o NanoVNA-H com o firmware original edy555/hugen, que não tem comando de toque remoto. Por isso o controle é feito por abas e botões que enviam comandos seriais suportados pelo firmware.
 
-![Relatório gerado pelo programa](docs/img/relatorio.png)
+![Relatório gerado pelo programa](nanovna-mirror/docs/img/relatorio.png)
 
 ## Recursos
 
@@ -21,7 +21,7 @@ Inspirado no SVxx01A_Tools (do VNA SV4401A), mas feito para o NanoVNA-H com o fi
 - **Exportação Touchstone** `.s1p` e `.s2p`.
 - **Console** para enviar qualquer comando do shell do NanoVNA.
 
-![Medidor S21](docs/img/medidor_s21.png)
+![Medidor S21](nanovna-mirror/docs/img/medidor_s21.png)
 
 ## Download (Windows)
 
