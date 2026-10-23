@@ -1,0 +1,182 @@
+﻿==============================================================================
+  NanoVNA Mirror  e  SV4401A Mirror
+  Espelhamento de tela e controle remoto para NanoVNA-H e SV4401A
+
+  Desenvolvido por Ruy Lazaro
+  laztel.com.br  |  ruylazaro.engenharia@gmail.com
+==============================================================================
+
+
+O QUE É
+-------
+Programa para Windows que mostra a tela do NanoVNA no computador, em tempo
+real e ampliada, e permite controlar o aparelho pelo PC: varredura, traces,
+marcadores, calibração, gerador de sinal e medidor S21. Também gera
+relatórios prontos em PNG ou PDF e exporta medições em Touchstone (.s1p/.s2p).
+
+
+REQUISITOS
+----------
+- Windows 10 ou 11 (64 bits).
+- NanoVNA-H ou SV4401A ligado ao computador por cabo USB (cabo de dados,
+  não apenas de carga).
+- Não é preciso instalar Python nem nenhum outro programa.
+
+Compatibilidade: testado com NanoVNA-H (firmware edy555 / hugen). Outros
+modelos ou versões de firmware podem não aceitar todos os comandos; nesse
+caso, a resposta do aparelho aparece no Console.
+
+
+PRIMEIRA EXECUÇÃO
+-----------------
+1. Extraia o arquivo .zip para uma pasta (não execute de dentro do zip).
+2. Dê dois cliques em "NanoVNA Mirror.exe" (NanoVNA-H) ou em
+   "SV4401A Mirror.exe" (SV4401A).
+3. Se aparecer a mensagem "O Windows protegeu o computador" (SmartScreen):
+   clique em "Mais informações" e depois em "Executar assim mesmo".
+   Isso acontece porque o programa não tem assinatura digital paga; não
+   indica problema no arquivo.
+4. A abertura pode levar alguns segundos. É normal.
+
+
+COMO USAR
+---------
+1. Ligue o NanoVNA e conecte-o ao USB.
+2. No programa, escolha a porta na lista "Porta" (o NanoVNA costuma ser
+   selecionado automaticamente) e clique em "Conectar".
+3. A tela do aparelho aparece à esquerda. Os controles ficam nas abas à
+   direita:
+
+   Estímulo     Faixa de frequência (início/fim ou centro/span), faixas
+                rápidas de radioamador, pausa e retomada da varredura.
+   Traces       Formato (logmag, smith, swr, fase...), canal S11 ou S21,
+                escala e referência de cada um dos 4 traces.
+   Marcadores   Posiciona marcadores por frequência e lê os valores
+                calculados: S11 em dB, SWR, impedância R+jX, L/C
+                equivalente e S21. "Mín. SWR -> M1" acha a ressonância.
+   Calibração   Sequência Open / Short / Load / Isolation / Thru e
+                salvar/carregar nos slots 0 a 4.
+   Gerador      Emite uma portadora fixa na porta CH0.
+   Sistema      Electrical delay, TDR, exportação Touchstone e
+                informações do aparelho.
+
+Atalhos:  F5 = ler o estado do aparelho   F12 = salvar imagem da tela
+
+
+FERRAMENTAS (menu Ferramentas, no topo da janela)
+--------------------------------------------------
+Cada ferramenta faz as próprias varreduras (até 1010 pontos) e devolve a
+faixa original do NanoVNA ao terminar. Calibre o NanoVNA na faixa e no ponto
+onde a medição será feita (por exemplo, na ponta do cabo de teste).
+
+Localizador de falhas (DTF)
+                Ligue a linha da torre no CH0. Mostra a distância até
+                conectores ruins, emendas com água e cabos danificados.
+                Escolha o cabo na lista; "Calibrar VF" ajusta o fator de
+                velocidade com um cabo de comprimento conhecido.
+Cabo            Ponta aberta ou em curto: perda, comprimento e fator de
+                velocidade real. Aba Stub: comprimento de stubs λ/4 e λ/2
+                e quanto cortar a partir da ressonância medida.
+Filtros e duplexadores
+                Entrada no CH0, saída no CH1. Banda, perda, notch,
+                rejeição e máscara aprovado/reprovado. Fator Q: QL pela
+                banda a -3 dB, Qu (para uma única cavidade/ressoador) e
+                Q do notch. "Ao vivo" atualiza
+                continuamente durante a sintonia; use os botões de zoom
+                para ver notches estreitos.
+Componentes     L, C, R e Q na frequência de trabalho e autorressonância.
+Cristal         Cristal em série entre CH0 e CH1: fs, fp, Rm, Lm, Cm, C0, Q.
+Casamento       Rede L (indutor e capacitor) que leva a antena a 50 Ω,
+                com valores comerciais e carta de Smith.
+Histórico       Salve a medição da instalação de cada antena; nas visitas
+                seguintes, compare e veja o que mudou.
+Tabela de cabos Fator de velocidade e atenuação dos cabos (editável).
+                Valores típicos de catálogo: confira o datasheet do seu cabo.
+
+Limite do NanoVNA-H: cerca de 70 dB de faixa dinâmica em S21 abaixo de
+300 MHz (menos acima). Rejeições maiores aparecem limitadas pelo ruído.
+
+
+RELATÓRIO
+---------
+Botão "Relatório" na barra superior. Preencha título, dispositivo sob teste,
+local, operador e observações, e escolha PNG ou PDF. O relatório inclui:
+data e hora, faixa de varredura, a tela ampliada, resumo do S11 (SWR mínimo,
+banda com SWR <= 2) e os valores dos marcadores ativos.
+Dica: posicione os marcadores antes de gerar o relatório.
+
+
+MEDIDOR S21
+-----------
+Botão "Medidor S21". O NanoVNA gera o sinal na porta CH0 e lê na porta CH1,
+numa frequência fixa, mostrando o resultado em uma tela estilo power meter.
+Uso típico: medir perda de cabos, atenuadores e filtros, ou ganho de
+amplificadores.
+- "Zerar (com thru)": ligue CH0 direto em CH1 com um cabo e clique. A partir
+  daí, a leitura mostra apenas a perda ou o ganho do que for inserido.
+- Em dBm: informe o nível de saída da porta CH0 (meça uma vez com um
+  medidor de potência ou analisador de espectro para maior exatidão).
+- Unidades: dB, dBm, W ou V. Em dBm, W e V o painel mostra a potência
+  (nW, µW, mW), a tensão RMS e pico a pico em 50 ohms (µV, mV) e o nível
+  em dBµV. O ponteiro do VU tem inércia, como num VU de verdade.
+- "Gravar CSV" registra as leituras com data e hora (com potência e tensão).
+
+
+SV4401A MIRROR
+--------------
+Mesmo programa, adaptado ao SV4401A (firmware 0.7.x ou mais recente):
+- Tela 1024x600. Clique na imagem para tocar na tela do aparelho; clique e
+  arraste funciona como arrastar o dedo. Assim todos os menus do próprio
+  SV4401A ficam acessíveis pelo PC.
+- Varreduras de 101 a 1001 pontos (escolha em Estímulo) e faixa até
+  4,4 GHz, com faixas rápidas de UHF, 23 cm e 2,4 GHz.
+- Calibração Open/Short/Load/Thru e slots 0 a 17.
+- Todas as ferramentas do menu Ferramentas, relatório, medidor S21 e
+  exportação Touchstone.
+- Não há abas Traces e Gerador: use os menus do aparelho pelo toque.
+- Se o toque não responder, abra a aba Sistema, clique em "Sintaxe" para
+  ver o formato aceito pelo firmware e escolha outro formato na lista.
+- A tela é grande (1,2 MB por quadro), então o espelhamento é mais lento
+  que no NanoVNA. O programa pausa o espelhamento durante as medições.
+
+
+CUIDADOS IMPORTANTES
+--------------------
+- NUNCA ligue um transmissor, rádio ou amplificador de potência diretamente
+  nas portas do NanoVNA. Isso pode danificar o receptor permanentemente.
+  Use atenuadores adequados.
+- O medidor S21 mede apenas o sinal gerado pelo próprio NanoVNA. Ele NÃO
+  funciona como medidor de RSSI de sinais externos.
+- O gerador produz onda quadrada, com harmônicos fortes, e nível
+  aproximadamente fixo. Acima de cerca de 300 MHz o aparelho usa o 3º
+  harmônico, e a frequência fundamental (f/3) sai mais forte que a pedida.
+  Use filtro se precisar de sinal limpo.
+- Ao fechar o programa ou desconectar, o aparelho volta automaticamente à
+  varredura normal.
+
+
+PROBLEMAS COMUNS
+----------------
+"Falha ao conectar" ou "NanoVNA não respondeu"
+  - Feche outros programas que possam estar usando a porta (NanoVNA-Saver,
+    NanoVNA-App, PuTTY, monitor serial do Arduino). Só um programa por vez
+    pode usar a porta.
+  - Desconecte e reconecte o cabo USB, clique em "↻" e tente de novo.
+  - Confira se abriu o programa certo para o aparelho (NanoVNA Mirror ou
+    SV4401A Mirror).
+
+A porta do NanoVNA não aparece na lista
+  - Verifique se o cabo USB transmite dados (alguns cabos só carregam).
+  - Veja no Gerenciador de Dispositivos se aparece em "Portas (COM e LPT)".
+
+A imagem atualiza devagar
+  - É normal: a tela é transferida pela porta serial, a poucos quadros por
+    segundo. Abrir o Medidor S21 pausa o espelhamento temporariamente.
+
+
+Os ajustes do relatório (título, DUT, local, operador) ficam salvos no arquivo
+.nanovna_mirror.json, na pasta do usuário do Windows.
+
+------------------------------------------------------------------------------
+Desenvolvido por Ruy Lazaro  |  laztel.com.br  |  ruylazaro.engenharia@gmail.com
+------------------------------------------------------------------------------

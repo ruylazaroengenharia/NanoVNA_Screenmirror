@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Arquivos gerados pelo programa
+*.s1p
+*.s2p
+*.csv
+relatorio_*.png
+relatorio_*.pdf
+nanovna_*.png
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
